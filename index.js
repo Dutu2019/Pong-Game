@@ -18,29 +18,48 @@ function getComputedStyleInt(element, property) {
 
 // Game object
 const Game = {
-  speed: 1,
-  playerY: getComputedStyleInt(container, "height") / 2,
+  speed: 5,
+  playerTop:
+    getComputedStyleInt(container, "height") / 2 -
+    getComputedStyleInt(player, "height") / 2,
   playerDirection: 0,
+  setPlayerTop(value) {
+    if (value < 0) this.playerTop = 0;
+    else if (
+      value >
+      getComputedStyleInt(container, "height") -
+        getComputedStyleInt(player, "height")
+    )
+      this.playerTop =
+        getComputedStyleInt(container, "height") -
+        getComputedStyleInt(player, "height");
+    else this.playerTop = value;
+    player.style.top = this.playerTop + "px";
+  },
 };
 
 // Listens for buttons
-window
-  .addEventListener("keydown", (ev) => {
-    if (ev.key === "ArrowUp") {
-      Game.playerDirection = 1;
-    } else if (ev.key === "ArrowDown") {
-      Game.playerDirection = -1;
-    }
-  })
-  .addEventListener("keyup", (ev) => {
-    if (ev.key === "ArrowUp" || ev.key === "ArrowDown") {
-      Game.playerDirection = 0;
-    }
-  });
+window.addEventListener("keydown", (ev) => {
+  if (ev.key === "ArrowUp") {
+    Game.playerDirection = -1;
+  } else if (ev.key === "ArrowDown") {
+    Game.playerDirection = 1;
+  }
+});
+window.addEventListener("keyup", (ev) => {
+  if (ev.key === "ArrowUp" || ev.key === "ArrowDown") {
+    Game.playerDirection = 0;
+  }
+});
 
+// Game functions
+function drawPlayer() {
+  Game.setPlayerTop(Game.playerTop + Game.playerDirection * Game.speed);
+}
 
 // Main loop
 function mainLoop() {
+  drawPlayer();
   window.requestAnimationFrame(mainLoop);
 }
 
