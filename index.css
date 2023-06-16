@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    background-color: black;
+}
+
+.ball {
+    --ball-width: 15px;
+    --ball-x: 50%;
+    --ball-y: 50%;
+    position: absolute;
+    width: var(--ball-width);
+    height: var(--ball-width);
+    top: calc(var(--ball-y) - var(--ball-width) / 2);
+    left: calc(var(--ball-x) - var(--ball-width) / 2);
+    background-color: black;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.gameContainer {
+    position: relative;
+    display: flex;
+    width: 80vw;
+    height: 50vh;
+    max-width: 1000px;
+    margin: 25vh auto;
+}
+
+.box {
+    position: relative;
+    height: 100%;
+    width: 50%;
+    border: 2px solid white;
+}
+
+.pallet {
+    --pallet-width: 10px;
+    --pallet-height: 40%;
+    position: absolute;
+    width: var(--pallet-width);
+    height: var(--pallet-height);
+    top: calc(50% - var(--pallet-height) / 2);
+    background-color: black;
+    border-radius: calc(var(--pallet-width) / 2);
+}
+
+.boxLeft {
+    background-color: deeppink;
+}
+
+.boxRight {
+    background-color: aqua;
+}
+
+.palletLeft {
+    top: calc(50% - var(--pallet-height) / 2);
+    left: 40px;
+}
+
+.palletRight {
+    top: calc(50% - var(--pallet-height) / 2);
+    right: 40px;
+}
