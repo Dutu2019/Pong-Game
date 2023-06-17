@@ -4,7 +4,7 @@ export function getComputedStyleInt(element, property) {
     .getPropertyValue(property)
     .split("")
     .map((el) => {
-      if (+el || el === ".") {
+      if (+el || el === "." || el === "0") {
         return el;
       } else return;
     })
@@ -23,8 +23,8 @@ export class Game {
       this.containerHeight / 2 - this.player1.getPlayerHeight() / 2
     );
     this.ball = ball;
-    this.ballSpeed = 1;
-    this.ballAngle = 0;
+    this.ballSpeed = 5;
+    this.ballAngle = 70;
     this.ball.setCoords(
       this.containerWidth / 2 - this.ball.getBallRadius(),
       this.containerHeight / 2 - this.ball.getBallRadius()
@@ -49,11 +49,24 @@ export class Game {
 
   moveBall() {
     let x = this.ballSpeed * Math.cos((Math.PI * this.ballAngle) / 180);
-    let y = this.ballSpeed * Math.sin((Math.PI * this.ballAngle) / 180);
+    let y = -this.ballSpeed * Math.sin((Math.PI * this.ballAngle) / 180);
     this.ball.setCoords(
       this.ball.getCoords().x + x,
-      this.ball.getCoords().y - y
+      this.ball.getCoords().y + y
     );
+    if (
+      this.ball.getCoords().x < 0 ||
+      this.ball.getCoords().x > this.containerWidth - 2 * this.ball.ballRadius
+    ) {
+      this.ballAngle = 180 - this.ballAngle;
+    }
+    if (
+      this.ball.getCoords().y < 0 ||
+      this.ball.getCoords().y > this.containerHeight - 2 * this.ball.ballRadius
+    ) {
+      console.log("yes");
+      this.ballAngle = 360 - this.ballAngle;
+    }
   }
 }
 
@@ -88,7 +101,7 @@ export class Ball {
   }
 
   getCoords() {
-    return {x: this.x, y: this.y};
+    return { x: this.x, y: this.y };
   }
 
   setCoords(x, y) {

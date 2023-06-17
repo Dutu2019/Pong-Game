@@ -4,7 +4,7 @@ body {
 }
 
 .ball {
-    --ball-width: 15px;
+    --ball-width: 100px;
     --ball-x: 50%;
     --ball-y: 50%;
     position: absolute;
